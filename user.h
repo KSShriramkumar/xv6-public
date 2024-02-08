@@ -1,5 +1,12 @@
 struct stat;
 struct rtcdate;
+struct processInfo
+{
+    int ppid;
+    int psize;
+    int numberContextSwitches;
+};
+
 
 // system calls
 int fork(void);
@@ -23,6 +30,11 @@ int getpid(void);
 char* sbrk(int);
 int sleep(int);
 int uptime(void);
+void hello(void);
+void helloYou(const char*);
+int getNumProc(void);
+int getMaxPid(void);
+int getProcInfo(int , struct processInfo*);
 
 // ulib.c
 int stat(const char*, struct stat*);
@@ -37,3 +49,5 @@ void* memset(void*, int, uint);
 void* malloc(uint);
 void free(void*);
 int atoi(const char*);
+
+

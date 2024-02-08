@@ -7,12 +7,42 @@
 #include "mmu.h"
 #include "proc.h"
 
+int 
+sys_getProcInfo(void){
+  int pid,pinf;
+  struct processInfo* procinf;
+  int status = argint(0,&pid);
+  if(status < 0){return -1;}
+  status = argint(1,&pinf);
+  if(status < 0){return -1;}
+  procinf = (struct processInfo*)(pinf);
+  return getProcInfo(pid,procinf);
+}
 int
 sys_fork(void)
 {
   return fork();
 }
-
+int 
+sys_getMaxPid(void){
+  return getMaxPid();
+}
+int
+sys_getNumProc(void){
+  return getNumProc();
+}
+void
+sys_helloYou(void){
+  char* name;
+  argstr(0,&name);
+  cprintf("%s",name);
+  return;
+}
+void
+sys_hello(void){
+  cprintf("hello");
+  return;
+}
 int
 sys_exit(void)
 {

@@ -111,6 +111,7 @@ found:
   p->context = (struct context*)sp;
   memset(p->context, 0, sizeof *p->context);
   p->context->eip = (uint)forkret;
+  p->swtches = 0;
 
   return p;
 }
@@ -342,6 +343,7 @@ scheduler(void)
       c->proc = p;
       switchuvm(p);
       p->state = RUNNING;
+      p->swtches++;
 
       swtch(&(c->scheduler), p->context);
       switchkvm();
@@ -532,3 +534,45 @@ procdump(void)
     cprintf("\n");
   }
 }
+int 
+getNumProc(void){
+    struct proc *p;
+    int no_proc = 0;
+    acquire(&ptable.lock);
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+      if(p->state == UNUSED){ continue;}
+      else{no_proc++;}
+    }
+    release(&ptable.lock);
+    return no_proc;
+    
+}
+int 
+getMaxPid(void){
+    struct proc *p;
+    int max_pid = 0;
+    acquire(&ptable.lock);
+    for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+      if(p->state == UNUSED){ continue;}
+      else{if(p->pid > max_pid){max_pid = p->pid;}}
+    }
+    release(&ptable.lock);
+    return max_pid;
+  }
+  int 
+  getProcInfo(int pid, struct processInfo* processInfo){
+    struct proc *p;
+    acquire(&ptable.lock);
+      for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+        if(p->pid == pid){ 
+          processInfo->ppid = p->parent->pid;
+          if(pid == 1){ processInfo->ppid = 0;}
+          processInfo->psize = p->sz;
+          processInfo->numberContextSwitches = p->swtches;
+          release(&ptable.lock);
+          return 0;
+        }
+      }
+    release(&ptable.lock);
+    return -1;
+  }

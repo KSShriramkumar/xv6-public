@@ -157,6 +157,8 @@ struct trapframe {
   uint edx;
   uint ecx;
   uint eax;
+  uint welcome;
+  uint true_eip;
 
   // rest of trap frame
   ushort gs;

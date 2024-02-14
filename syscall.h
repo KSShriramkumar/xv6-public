@@ -25,3 +25,6 @@
 #define SYS_getNumProc  24
 #define SYS_getMaxPid  25
 #define SYS_getProcInfo 26
+#define SYS_getprio 27
+#define SYS_setprio 28
+#define SYS_welcomeFunction 29

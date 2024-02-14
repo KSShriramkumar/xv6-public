@@ -112,6 +112,8 @@ found:
   memset(p->context, 0, sizeof *p->context);
   p->context->eip = (uint)forkret;
   p->swtches = 0;
+  p->sched_prio = 1;
+  p->curr_prio = p->sched_prio;
 
   return p;
 }
@@ -389,6 +391,7 @@ yield(void)
 {
   acquire(&ptable.lock);  //DOC: yieldlock
   myproc()->state = RUNNABLE;
+  myproc()->curr_prio = myproc()->sched_prio;
   sched();
   release(&ptable.lock);
 }
@@ -575,4 +578,30 @@ getMaxPid(void){
       }
     release(&ptable.lock);
     return -1;
+}
+int 
+getprio(){
+  struct proc *curproc = myproc();
+  return curproc->sched_prio;
+
+}
+int 
+setprio(int n){
+  struct proc *curproc = myproc();
+  if(n <= 0){
+    return -1;
   }
+  else{
+    int current_priority = n - (curproc->sched_prio - curproc->curr_prio);
+    if(current_priority > 1){curproc->curr_prio = current_priority;}
+    else{curproc->curr_prio = 1;}
+    curproc->sched_prio = n;
+  }
+  return 0;
+}
+int 
+welcomeFunction(uint address){
+  struct proc *curproc = myproc();
+  curproc->tf->welcome = address;
+  return 0;
+}

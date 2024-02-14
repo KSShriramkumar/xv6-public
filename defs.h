@@ -104,6 +104,9 @@ int             pipewrite(struct pipe*, char*, int);
 
 //PAGEBREAK: 16
 // proc.c
+int             welcomeFunction(uint);
+int             getprio(void);
+int             setprio(int );
 int             getProcInfo(int,struct processInfo*);
 int             getMaxPid(void);
 int             getNumProc(void);

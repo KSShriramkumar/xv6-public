@@ -6,7 +6,24 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
-
+int 
+sys_welcomeFunction(){
+  int n;
+  argint(0, &n);
+  uint address = (uint)n;
+  return welcomeFunction(address);
+}
+int 
+sys_setprio(void){
+  int n;
+  int status = argint(0, &n);
+  if(status < 0){return -1;}
+  return setprio(n);
+}
+int 
+sys_getprio(void){
+  return getprio();
+}
 int 
 sys_getProcInfo(void){
   int pid,pinf;

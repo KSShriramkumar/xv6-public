@@ -8,6 +8,8 @@ struct processInfo
 };
 
 
+
+
 // system calls
 int fork(void);
 int exit(void) __attribute__((noreturn));
@@ -35,6 +37,9 @@ void helloYou(const char*);
 int getNumProc(void);
 int getMaxPid(void);
 int getProcInfo(int , struct processInfo*);
+int getprio(void);
+int setprio(int);
+int welcomeFunction(uint address);
 
 // ulib.c
 int stat(const char*, struct stat*);

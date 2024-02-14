@@ -57,8 +57,11 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
-  int swtches;              // Number of times scheduler context swithced into the process
+  int swtches;                 // Number of times scheduler context swithced into the process
+  int sched_prio;              // The priority given to the scheduler by user
+  int curr_prio;               // Current priority given to the process 
 };
+
 
 // Process memory is laid out contiguously, low addresses first:
 //   text

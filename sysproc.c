@@ -6,8 +6,12 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
+int
+sys_welcomeDone(void){
+  return welcomeDone();
+}
 int 
-sys_welcomeFunction(){
+sys_welcomeFunction(void){
   int n;
   argint(0, &n);
   uint address = (uint)n;

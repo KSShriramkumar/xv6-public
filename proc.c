@@ -114,6 +114,7 @@ found:
   p->swtches = 0;
   p->sched_prio = 1;
   p->curr_prio = p->sched_prio;
+  p->welcome = 0; 
 
   return p;
 }
@@ -202,6 +203,11 @@ fork(void)
   np->sz = curproc->sz;
   np->parent = curproc;
   *np->tf = *curproc->tf;
+  if(curproc->welcome != 0){
+    np->welcome = curproc->welcome;
+    np->true_eip = np->tf->eip;
+    np->tf->eip = np->welcome;
+  }
 
   // Clear %eax so that fork returns 0 in the child.
   np->tf->eax = 0;
@@ -602,6 +608,12 @@ setprio(int n){
 int 
 welcomeFunction(uint address){
   struct proc *curproc = myproc();
-  curproc->tf->welcome = address;
+  curproc->welcome = address;
+  return 0;
+}
+int 
+welcomeDone(void){
+  struct proc *curproc = myproc();
+  curproc->tf->eip = curproc->true_eip;
   return 0;
 }

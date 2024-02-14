@@ -39,7 +39,8 @@ int getMaxPid(void);
 int getProcInfo(int , struct processInfo*);
 int getprio(void);
 int setprio(int);
-int welcomeFunction(uint address);
+int welcomeFunction(void *address);
+int welcomeDone(void);
 
 // ulib.c
 int stat(const char*, struct stat*);

@@ -111,6 +111,7 @@ extern int sys_getProcInfo(void);
 extern int sys_getprio(void);
 extern int sys_setprio(void);
 extern int sys_welcomeFunction(void);
+extern int sys_welcomeDone(void);
 
 
 static int (*syscalls[])(void) = {
@@ -143,6 +144,7 @@ static int (*syscalls[])(void) = {
 [SYS_getprio] sys_getprio,
 [SYS_setprio] sys_setprio,
 [SYS_welcomeFunction] sys_welcomeFunction,
+[SYS_welcomeDone] sys_welcomeDone,
 };
 
 void

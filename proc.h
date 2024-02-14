@@ -60,6 +60,8 @@ struct proc {
   int swtches;                 // Number of times scheduler context swithced into the process
   int sched_prio;              // The priority given to the scheduler by user
   int curr_prio;               // Current priority given to the process 
+  uint welcome;
+  uint true_eip;
 };
 
 

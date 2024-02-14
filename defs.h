@@ -104,6 +104,7 @@ int             pipewrite(struct pipe*, char*, int);
 
 //PAGEBREAK: 16
 // proc.c
+int             welcomeDone(void);
 int             welcomeFunction(uint);
 int             getprio(void);
 int             setprio(int );
